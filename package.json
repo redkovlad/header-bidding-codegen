@@ -1,0 +1,16 @@
+{
+  "name": "header-bidding-codegen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "node ./src/codegen.js"
+  },
+  "author": "Redko Vlad",
+  "license": "ISC",
+  "dependencies": {
+    "json5": "^2.2.1",
+    "node-xlsx": "^0.21.0"
+  }
+}
