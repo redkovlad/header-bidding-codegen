@@ -136,7 +136,7 @@ function generateCodeFiles(parsedData, sheetName) {
             parsedData[p][device] = bidders;
         }
 
-        const data = `const data = ${JSON5.stringify(parsedData[p], null, '    ')};\n\nexport default data;\n`;
+        const data = `const bids = ${JSON5.stringify(parsedData[p], null, '    ')};\n\nexport default bids;\n`;
         fs.writeFileSync(`${sheetDirPath}/${p}.ts`, data);
     }
 }
