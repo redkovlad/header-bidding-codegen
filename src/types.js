@@ -35,6 +35,7 @@ export const Bidders = {
     'sape': 'sape',
     'relap': 'relap',
     'hybrid': 'hybrid',
+    'bidvol': 'bidvol',
 };
 
 export const Devices = [
