@@ -1,3 +1,18 @@
+// Названия листов(lowerCase) / проект на паблике
+export const Projects = {
+    'woman': 'woman',
+    'wday': 'wday',
+    'elle': 'elle',
+    'mc': 'marieclaire',
+    'psy': 'psychologies',
+    'ellegirl': 'ellegirl',
+    'elledecor': 'elledecoration',
+    'maxim': 'maxim',
+    'parents': 'parents',
+    'vs': 'vokrugsveta',
+    'dp': 'doctorpiter',
+}
+
 export const Adunits = [
     "inread",
     "inline-1",

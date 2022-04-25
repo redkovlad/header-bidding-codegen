@@ -1,8 +1,14 @@
 # header-bidding-codegen
 
-## Инструкция
+## Установка
+1. npm i
+2. Создать в корне .env с переменной PATH_TO_PUBLIC, пример:
+PATH_TO_PUBLIC="/home/user/reps/webapp-public"
+3. Поместить в /assets/ xlsx-файл, назвать его bidders.xlsx
 
-1. Кидай bidders.xlsx в /assets/
-2. npm run build
-3. ...
-4. PROFIT!
+## Использование
+* npm run build, которая состоит из:
+    * npm run codegen - генерирует конфиги в /build
+    * npm run publish - копирует файлы конфигов в проекты по пути PATH_TO_PUBLIC
+
+Также в файле /src/types.js можно закомментить ненужные проекты, адъюниты, биддеров, codegen их пропустит.

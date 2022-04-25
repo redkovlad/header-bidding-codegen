@@ -2,7 +2,7 @@ import xlsx from 'node-xlsx';
 import path  from 'path';
 import fs from 'fs';
 import JSON5 from 'json5';
-import { Adunits, NumbericalInlines, Bidders, Devices } from './types.js';
+import { Adunits, NumbericalInlines, Bidders, Devices, Projects } from './types.js';
 
 String.prototype.t = function() {
     return this.trim().toLowerCase();
@@ -26,7 +26,13 @@ try{
     console.error(err);
 }
 
-sheets?.forEach(({ name: sheetName , data }) => {    
+console.log(`Начинаем парсить листы...`);
+
+sheets?.forEach(({ name: sheetName , data }) => {
+    if (!Projects[sheetName.t()]) {
+        console.log(`Не найдено проекта для листа '${sheetName}', пропускаю`);
+        return;
+    }
     // Если в первом столбце начинается перечисление адъюнитов
     const isValidSheet = data.some(item => isAdunit(item[0]));
     
@@ -45,6 +51,8 @@ sheets?.forEach(({ name: sheetName , data }) => {
     const parsedData = parseData(data, biddersIndexes);
     
     generateCodeFiles(parsedData, sheetName);
+
+    console.log(`Лист готов: ${sheetName}`);
 });
 
 function getBiddersIndexes(data) {
@@ -115,7 +123,7 @@ function parseData(data, biddersIndexes) {
 }
 
 function generateCodeFiles(parsedData, sheetName) {
-    const sheetDirPath = `${__dirname}/build/${sheetName}`;
+    const sheetDirPath = `${__dirname}/build/${sheetName.t()}`;
     try {
         fs.mkdirSync(sheetDirPath);
     } catch (e) {} 

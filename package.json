@@ -5,11 +5,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "node ./src/codegen.js"
+    "codegen": "node ./src/codegen.js",
+    "publish": "node ./src/publish.js",
+    "build": "node ./src/codegen.js && node ./src/publish.js"
   },
   "author": "Redko Vlad",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "json5": "^2.2.1",
     "node-xlsx": "^0.21.0"
   }
