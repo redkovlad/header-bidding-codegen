@@ -51,7 +51,8 @@ export const Bidders = {
     'relap': 'relap',
     'hybrid': 'hybrid',
     'bidvol': 'bidvol',
-    'gnezdo': 'Gnezdo',
+    'gnezdo': 'gnezdo',
+    'мтс': 'mts',
 };
 
 export const Devices = [
