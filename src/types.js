@@ -53,6 +53,7 @@ export const Bidders = {
     'bidvol': 'bidvol',
     'gnezdo': 'gnezdo',
     'мтс': 'mts',
+    'adfox(adsmart)': 'adfox_adsmart',
 };
 
 export const Devices = [

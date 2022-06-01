@@ -3,6 +3,7 @@ import path  from 'path';
 import fs from 'fs';
 import JSON5 from 'json5';
 import { Adunits, NumbericalInlines, Bidders, Devices, Projects } from './types.js';
+import prepareJSONCell from './helpers/prepareJSONCell.js'
 
 String.prototype.t = function() {
     return this.trim().toLowerCase();
@@ -48,7 +49,7 @@ sheets?.forEach(({ name: sheetName , data }) => {
         return;
     }
 
-    const parsedData = parseData(data, biddersIndexes);
+    const parsedData = parseData(data, biddersIndexes, sheetName);
     
     generateCodeFiles(parsedData, sheetName);
 
@@ -67,7 +68,7 @@ function getBiddersIndexes(data) {
     }, {});
 }
 
-function parseData(data, biddersIndexes) {
+function parseData(data, biddersIndexes, sheetName) {
     const parsedData =  data.reduce((acc, row) => {
         let adunit, device;
 
@@ -93,9 +94,19 @@ function parseData(data, biddersIndexes) {
 
             Object.entries(biddersIndexes).forEach(([bidder, index]) => {
                 if(row[index]) {
-                    acc[adunit][device][bidder] = {
-                        placementId: row[index]
-                    };
+                    if (bidder.startsWith('adfox_')) {
+                        let json;
+                        try {
+                            json = prepareJSONCell(row[index]);
+                            acc[adunit][device][bidder] = json;
+                        } catch(e) {
+                            console.log(`Опять программатик несуразицу написали в ${sheetName} ${adunit} ${device} ${bidder}`);
+                        }
+                    } else {
+                        acc[adunit][device][bidder] = {
+                            placementId: row[index]
+                        };
+                    }
                 }
             });
         }
@@ -104,19 +115,21 @@ function parseData(data, biddersIndexes) {
     }, {});
 
     // Перекопируем все параметры биддеров нумерованных инлайнов в инлайн обычный
-    NumbericalInlines.forEach(i => {
-        const inline = parsedData[i];
+    NumbericalInlines.forEach((inlinePlacement, inlineIndex) => {
+        const inline = parsedData[inlinePlacement];
 
         for (const device in inline) {
             for (const bidder in inline[device]) {
                 const inlineBidder = parsedData['inline'][device][bidder];
-                if(!inlineBidder.placementInlineIds) {
-                    inlineBidder.placementInlineIds = [];
+                if (!inlineBidder.placementInlineIds) {
+                    inlineBidder.placementInlineIds = Array.from({ length: NumbericalInlines.length }).fill(null);
                 }
-                inlineBidder.placementInlineIds.push(inline[device][bidder].placementId);
+                const inlineData = inline[device][bidder];
+                const stuffToPush = inlineData.placementId ? inlineData.placementId : inlineData;
+                inlineBidder.placementInlineIds[inlineIndex] = (stuffToPush);
             }
         }
-        delete parsedData[i];
+        delete parsedData[inlinePlacement];
     });
 
     return parsedData;
