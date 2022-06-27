@@ -54,6 +54,7 @@ export const Bidders = {
     'gnezdo': 'gnezdo',
     'мтс': 'mts',
     'adfox(adsmart)': 'adfox_adsmart',
+    'adfox(roxot)': 'adfox_yandex_roxot-adfox-hb',
 };
 
 export const Devices = [
