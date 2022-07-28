@@ -121,6 +121,10 @@ function parseData(data, biddersIndexes, sheetName) {
         for (const device in inline) {
             for (const bidder in inline[device]) {
                 const inlineBidder = parsedData['inline'][device][bidder];
+                if (!inlineBidder) {
+                    throw `${sheetName} inline ${device} ${bidder} not exists`;
+                }
+
                 if (!inlineBidder.placementInlineIds) {
                     inlineBidder.placementInlineIds = Array.from({ length: NumbericalInlines.length }).fill(null);
                 }

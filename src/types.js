@@ -11,6 +11,7 @@ export const Projects = {
     'parents': 'parents',
     'vs': 'vokrugsveta',
     'dp': 'doctorpiter',
+    'starhit': 'starhit',
 }
 
 export const Adunits = [
