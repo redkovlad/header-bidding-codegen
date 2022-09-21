@@ -56,6 +56,7 @@ export const Bidders = {
     'мтс': 'mts',
     'adfox(adsmart)': 'adfox_adsmart',
     'adfox(roxot)': 'adfox_yandex_roxot-adfox-hb',
+    'astralab': 'astralab'
 };
 
 export const Devices = [
